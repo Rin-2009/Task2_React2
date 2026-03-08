@@ -1,4 +1,5 @@
-import Home from "./Home";
+
+
 
 function Project_3(){
     return(
@@ -8,4 +9,4 @@ function Project_3(){
     );
 }
 
-export default Project_3;
+export default Project_2;
