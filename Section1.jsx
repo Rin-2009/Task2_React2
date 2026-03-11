@@ -1,6 +1,4 @@
-import { useState } from "react";
-
-import "./Section1.css";
+import "./Task2_React2/Section1.css";
 
 function Section1({
   color,
@@ -12,35 +10,15 @@ function Section1({
   lightMood,
   setLightMood,
   ThemLight,
+  tasks,
+  setTasks,
+  taskInput,
+  setTaskInput,
+  addTask,
+  completed,
+  percentage,
+  toggleTask,
 }) {
-  const [tasks, setTasks] = useState([]);
-  const [taskInput, setTaskInput] = useState("");
-
-  // إضافة تاسك
-  const addTask = () => {
-    if (taskInput.trim() === "") return;
-
-    setTasks([...tasks, { text: taskInput, done: false }]);
-
-    setTaskInput("");
-  };
-
-  // تغيير حالة التاسك
-  const toggleTask = (index) => {
-    const updatedTasks = [...tasks];
-
-    updatedTasks[index].done = !updatedTasks[index].done;
-
-    setTasks(updatedTasks);
-  };
-
-  // حساب التاسكات المنجزة
-  const completed = tasks.filter((task) => task.done).length;
-
-  // حساب النسبة
-  const percentage =
-    tasks.length === 0 ? 0 : Math.round((completed / tasks.length) * 100);
-
   return (
     <>
       <section className="w-100 mt-5">
@@ -105,13 +83,15 @@ function Section1({
               id=""
               className=" mb-5 text-light bg-dark rounded form-control w-50 input-tasks"
               style={{ borderBottom: `1px solid ${color}` }}
-              value={taskInput}
+              value={taskInput || ""}
               onChange={(e) => setTaskInput(e.target.value)}
             />
-
-            {tasks.map((task, index) => (
-              <ul key={index} className=" list-group">
-                <li className=" d-flex align-items-center gap-3 fs-4 text-light list-group-item bg-black mt-3">
+            <ul className=" list-group">
+              {tasks.map((task, index) => (
+                <li
+                  key={index}
+                  className=" d-flex align-items-center gap-3 fs-4 text-light list-group-item bg-black mt-3"
+                >
                   <input
                     type="checkbox"
                     checked={task.done}
@@ -120,13 +100,20 @@ function Section1({
 
                   {task.text}
                 </li>
-              </ul>
-            ))}
+              ))}
+            </ul>
 
             <br />
 
             {/* شريط التقدم */}
-            <input type="range" min="0" max="100" value={percentage} readOnly />
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value={percentage || 0}
+              readOnly
+              style={{ accentColor: color }}
+            />
 
             <p
               className="text-center fw-semibold mt-3"

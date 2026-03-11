@@ -2,6 +2,8 @@ import { useState } from "react";
 import Navbar from "./Navbar";
 import Section1 from "./Section1";
 import Section2 from "./Section2";
+import Section3 from "./Section3";
+import Section4 from "./Section4";
 import img2 from "../assets/img2.png";
 import img3 from "../assets/img3.png";
 import img4 from "../assets/img4.png";
@@ -33,6 +35,34 @@ function Home() {
     setLightMood(!lightMood);
   };
 
+  const [tasks, setTasks] = useState([]);
+  const [taskInput, setTaskInput] = useState("");
+
+  // إضافة تاسك
+  const addTask = () => {
+    if (taskInput.trim() === "") return;
+
+    setTasks([...tasks, { text: taskInput, done: false }]);
+
+    setTaskInput("");
+  };
+
+  // تغيير حالة التاسك
+  const toggleTask = (index) => {
+    const updatedTasks = [...tasks];
+
+    updatedTasks[index].done = !updatedTasks[index].done;
+
+    setTasks(updatedTasks);
+  };
+
+  // حساب التاسكات المنجزة
+  const completed = tasks.filter((task) => task.done).length;
+
+  // حساب النسبة
+  const percentage =
+    tasks.length === 0 ? 0 : Math.round((completed / tasks.length) * 100);
+
   return (
     <>
       <div
@@ -43,7 +73,7 @@ function Home() {
           position: "relative",
           backgroundPosition: "center",
           backgroundSize: "cover",
-          height: "200vh",
+          height: "250vh",
           width: "100%",
           overflow: "hidden",
         }}
@@ -70,12 +100,34 @@ function Home() {
             lightMood={lightMood}
             setLightMood={setLightMood}
             ThemLight={ThemLight}
+            tasks={tasks}
+            setTasks={setTasks}
+            taskInput={taskInput}
+            setTaskInput={setTaskInput}
+            addTask={addTask}
+            completed={completed}
+            percentage={percentage}
+            toggleTask={toggleTask}
           />
 
           <Section2
             color={color}
             setColor={setColor}
             ChangeColor={ChangeColor}
+          />
+
+          <Section3
+            color={color}
+            setColor={setColor}
+            ChangeColor={ChangeColor}
+          />
+
+          <Section4
+            color={color}
+            setColor={setColor}
+            ChangeColor={ChangeColor}
+            tasks={tasks}
+            completed={completed}
           />
         </div>
       </div>

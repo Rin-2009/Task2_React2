@@ -16,3 +16,11 @@
     width: 100% !important;
   }
 }
+
+button {
+  transition: all 0.3s;
+}
+
+button:hover {
+  transform: scale(0.9);
+}
